@@ -27,7 +27,7 @@ define Package/ftth-movistar
   SUBMENU:=FTTH
   URL:=http://foro.seguridadwireless.net/openwrt/
   TITLE:=FTTH Movistar
-  DEPENDS:=+kmod-bridge +swconfig +bird4 +mcproxy +udpxy +xupnpd
+  DEPENDS:=+kmod-bridge +kmod-ipt-nathelper-rtsp +swconfig +bird4 +mcproxy +udpxy +xupnpd
 endef
 
 define Build/Compile
