@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014 Álvaro Fernández Rojas
+# Copyright (C) 2014-2015 Álvaro Fernández Rojas
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -27,7 +27,17 @@ define Package/ftth-movistar
   SUBMENU:=FTTH
   URL:=http://foro.seguridadwireless.net/openwrt/
   TITLE:=FTTH Movistar
-  DEPENDS:=+kmod-bridge +kmod-ipt-nathelper-rtsp +swconfig +bird4 +mcproxy +udpxy +xupnpd
+  DEPENDS:= +kmod-bridge +swconfig
+    DEPENDS+= +FTTH_MOVISTAR_SERV_DDNS:ddns-scripts +FTTH_MOVISTAR_SERV_WOL:etherwake +FTTH_MOVISTAR_SERV_UPNP:miniupnpd
+  DEPENDS+= +FTTH_MOVISTAR_VOIP:bird4
+  DEPENDS+= +FTTH_MOVISTAR_IPTV:bird4 +FTTH_MOVISTAR_IPTV_IGMPPROXY:igmpproxy +FTTH_MOVISTAR_IPTV:kmod-ipt-nathelper-rtsp +FTTH_MOVISTAR_IPTV_MCPROXY:mcproxy
+    DEPENDS+= +FTTH_MOVISTAR_IPTV_UDPXY:udpxy +FTTH_MOVISTAR_IPTV_XUPNPD:xupnpd
+  DEPENDS+= +FTTH_MOVISTAR_LUCI:luci +FTTH_MOVISTAR_LUCI:luci-proto-ipv6
+    DEPENDS+= +FTTH_MOVISTAR_LUCI_DDNS:luci-app-ddns +FTTH_MOVISTAR_LUCI_UDPXY:luci-app-udpxy +FTTH_MOVISTAR_LUCI_UPNP:luci-app-upnp +FTTH_MOVISTAR_LUCI_WOL:luci-app-wol
+endef
+
+define Package/ftth-movistar/config
+	source "$(SOURCE)/Config.in"
 endef
 
 define Build/Compile

@@ -1,0 +1,74 @@
+menu "Movistar FTTH configuration"
+	menu "Services config"
+		config FTTH_MOVISTAR_SERV_DDNS
+			bool "ddns-scripts"
+			default y
+
+		config FTTH_MOVISTAR_SERV_WOL
+			bool "etherwake"
+			default n
+
+		config FTTH_MOVISTAR_SERV_UPNP
+			bool "miniupnpd"
+			default y
+	endmenu
+
+	config FTTH_MOVISTAR_VOIP
+		bool "VOIP Support"
+		default y
+
+	config FTTH_MOVISTAR_IPTV
+		bool "IPTV Support"
+		default y
+
+	menu "IPTV config"
+		depends on FTTH_MOVISTAR_IPTV
+
+		choice
+			prompt "Multicast Proxy"
+			default FTTH_MOVISTAR_IPTV_MCPROXY
+
+			config FTTH_MOVISTAR_IPTV_IGMPPROXY
+				bool "igmpproxy"
+
+			config FTTH_MOVISTAR_IPTV_MCPROXY
+				bool "mcproxy"
+		endchoice
+
+		config FTTH_MOVISTAR_IPTV_UDPXY
+			bool "udpxy"
+			default y
+
+		config FTTH_MOVISTAR_IPTV_XUPNPD
+			bool "xupnpd"
+			default y
+	endmenu
+
+	config FTTH_MOVISTAR_LUCI
+		bool "LuCI Support"
+		default y
+
+	menu "LuCI config"
+		depends on FTTH_MOVISTAR_LUCI
+
+		config FTTH_MOVISTAR_LUCI_DDNS
+			depends on FTTH_MOVISTAR_SERV_DDNS
+			bool "luci-app-ddns"
+			default y
+
+		config FTTH_MOVISTAR_LUCI_UDPXY
+			depends on FTTH_MOVISTAR_IPTV_UDPXY
+			bool "luci-app-udpxy"
+			default y
+
+		config FTTH_MOVISTAR_LUCI_UPNP
+			depends on FTTH_MOVISTAR_SERV_UPNP
+			bool "luci-app-upnp"
+			default y
+
+		config FTTH_MOVISTAR_LUCI_WOL
+			depends on FTTH_MOVISTAR_SERV_WOL
+			bool "luci-app-wol"
+			default y
+	endmenu
+endmenu
